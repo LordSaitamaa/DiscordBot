@@ -1,5 +1,0 @@
-{
-  "ConnectionStrings": {
-    "Default": "server=localhost;database=thirain;user=root;password=qwerty;"
-  }
-}
