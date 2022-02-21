@@ -15,9 +15,9 @@ namespace Thirain.Data.TDBContext
         {
             var config = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("dbsettings.json", false, true)
+            .AddJsonFile("appsettings.json", false, true)
             .Build();
-
+            
             var optionsBuilder = new DbContextOptionsBuilder()
                 .UseNpgsql(config.GetConnectionString("Default"));
 

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Discord.Addons.Hosting;
-using System.IO;
 using Microsoft.Extensions.Logging;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,18 +8,19 @@ using Thirain.CommandHandler;
 using Thirain.Data.TDBContext;
 using Microsoft.EntityFrameworkCore;
 using Thirain.Data.DataAccess;
+using System.Threading.Tasks;
 
 namespace Thirain
 {
-    public class Program
+    class Program
     {
-        public static async void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            var builder = new HostBuilder()
+            var builder = Host.CreateDefaultBuilder()
                 .ConfigureAppConfiguration(x =>
                 {
                     var config = new ConfigurationBuilder()
-                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .SetBasePath(System.IO.Directory.GetCurrentDirectory())
                     .AddJsonFile("appsettings.json", false, true)
                     .Build();
                     x.AddConfiguration(config);
@@ -34,18 +34,18 @@ namespace Thirain
                 {
                     config.SocketConfig = new DiscordSocketConfig
                     {
-                        LogLevel = Discord.LogSeverity.Verbose,
-                        AlwaysDownloadUsers = true,
+                        LogLevel = Discord.LogSeverity.Debug,
+                        AlwaysDownloadUsers = false,
                         MessageCacheSize = 200
                     };
 
-                    config.Token = context.Configuration["token"];
+                    config.Token = context.Configuration["Token"];
                 })
                 .UseCommandService((context, config) =>
                 {
                     config.CaseSensitiveCommands = true;
                     config.LogLevel = Discord.LogSeverity.Debug;
-                    config.DefaultRunMode = Discord.Commands.RunMode.Async;
+                    config.DefaultRunMode = Discord.Commands.RunMode.Sync;
                 })
                 .ConfigureServices((context, services) =>
                 {
@@ -56,9 +56,7 @@ namespace Thirain
                 })
                 .UseConsoleLifetime();
 
-            var host = builder.Build();
-            using(host)
-                await host.RunAsync();
+            await builder.StartAsync();
         }
     }
 }

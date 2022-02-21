@@ -52,6 +52,7 @@ namespace Thirain.CommandHandler
             var context = new SocketCommandContext(_client, message);
             await _commandService.ExecuteAsync(context, argpos, _provider);
         }
+
         private async Task OnCommandExecuted(Optional<CommandInfo> commandInfo, ICommandContext commandContext, IResult result)
         {
             if (!commandInfo.IsSpecified)
