@@ -16,7 +16,7 @@ namespace Thirain
     {
         static async Task Main(string[] args)
         {
-            var builder = Host.CreateDefaultBuilder()
+            var builder = new HostBuilder()
                 .ConfigureAppConfiguration(x =>
                 {
                     var config = new ConfigurationBuilder()
@@ -43,7 +43,7 @@ namespace Thirain
                 })
                 .UseCommandService((context, config) =>
                 {
-                    config.CaseSensitiveCommands = true;
+                    config.CaseSensitiveCommands = false;
                     config.LogLevel = Discord.LogSeverity.Debug;
                     config.DefaultRunMode = Discord.Commands.RunMode.Sync;
                 })
@@ -53,10 +53,14 @@ namespace Thirain
                       .AddHostedService<ThirainCommandHandler>()
                       .AddDbContextFactory<ThirainDbContext>(options => options.UseNpgsql(context.Configuration.GetConnectionString("Default")))
                       .AddSingleton<DataAccessLayer>();
+                    
                 })
                 .UseConsoleLifetime();
 
-            await builder.StartAsync();
+            var host = builder.Build();
+
+            using(host)
+                await host.RunAsync();
         }
     }
 }

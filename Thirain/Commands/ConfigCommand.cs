@@ -14,10 +14,33 @@ namespace Thirain.Commands
 
 
         [Command("help")]
-        [Alias("hilfe")]
+        [Alias("hilfe", "h")]
         public Task HelpAsync()
         {
-            return ReplyAsync("HALLOOOOO");
+            string help = GetHelpCommand();
+            return ReplyAsync(help);
+        }
+
+        private string GetHelpCommand()
+        {
+            string help = string.Empty;
+            help = "Ich bin die Hilfe";
+            return help;
+        }
+
+        [Command("confighelp")]
+        [RequireUserPermission(Discord.GuildPermission.ManageGuild)]
+        public async Task ConfigAsync(string command)
+        {
+            var u = Context.Message.Author;
+            await Discord.UserExtensions.SendMessageAsync(u, command);
+        }
+
+        [Command("setchannel")]
+        [RequireUserPermission(Discord.GuildPermission.ManageGuild)]
+        public async Task ConfigChannelAsync(string command, string command1)
+        {
+            await ReplyAsync(command + " " + command1);
         }
     }
 }
