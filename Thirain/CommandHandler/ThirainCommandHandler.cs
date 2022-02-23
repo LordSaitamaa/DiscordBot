@@ -75,11 +75,11 @@ namespace Thirain.CommandHandler
             //var ch = _client.GetGuild(942103230517772388);
             //var guilds = Client.Guilds.Count();
             
-            var ch = _client.GetGuild(942103230517772388)?.GetChannel(942103230517772391) as IMessageChannel;
+            var ch = _client.GetGuild(431)?.GetChannel(432) as IMessageChannel;
             if (ch != null)
             {
                 var message = await ch.SendMessageAsync("```Test: " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "```");
-                var emote = _client.GetGuild(942103230517772388).Emotes;
+                var emote = _client.GetGuild(432).Emotes;
 
                 var emoji = (GuildEmote) emote.FirstOrDefault(x => x.Name == "lostarkTest");// as GuildEmote;
                 var emoteeee = Emote.Parse($"<:{emoji.Name}:{emoji.Id}>");
