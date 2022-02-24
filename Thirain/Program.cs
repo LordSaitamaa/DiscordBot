@@ -30,13 +30,14 @@ namespace Thirain
                     x.AddConsole();
                     x.SetMinimumLevel(LogLevel.Debug);
                 })
-                .ConfigureDiscordHost((context, config) =>
+                .ConfigureDiscordShardedHost((context, config) =>
                 {
                     config.SocketConfig = new DiscordSocketConfig
                     {
                         LogLevel = Discord.LogSeverity.Debug,
                         AlwaysDownloadUsers = false,
-                        MessageCacheSize = 200
+                        MessageCacheSize = 200,
+                        TotalShards = 4
                     };
 
                     config.Token = context.Configuration["Token"];
@@ -52,7 +53,7 @@ namespace Thirain
                     services
                       .AddHostedService<ThirainCommandHandler>()
                       .AddDbContextFactory<ThirainDbContext>(options => options.UseNpgsql(context.Configuration.GetConnectionString("Default")))
-                      .AddSingleton<DataAccessLayer>();
+                      .AddSingleton<IUnitOfWorkServer, UnitOfWorkServer>();
                     
                 })
                 .UseConsoleLifetime();

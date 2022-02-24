@@ -12,10 +12,21 @@ namespace Thirain.Commands
 {
     public abstract class CommandBase : ModuleBase<SocketCommandContext>
     {
-        public readonly DataAccessLayer _dal;
-        protected CommandBase(DataAccessLayer dal)
+        public readonly IUnitOfWorkServer _dal;
+        protected readonly List<string> _channels;
+        protected CommandBase(IUnitOfWorkServer dal)
         {
             _dal = dal;
+            _channels = FillChannelCommands();
+        }
+
+        private List<string> FillChannelCommands()
+        {
+            List<string> retList = new List<string>();
+            retList.Add("merchant");
+            retList.Add("raid");
+
+            return retList;
         }
     }
 }

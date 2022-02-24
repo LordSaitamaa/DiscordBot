@@ -7,11 +7,15 @@
 
   <ItemGroup>
     <None Remove="appsettings.json" />
+    <None Remove="basicEmoteServer.json" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="basicEmoteServer.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>

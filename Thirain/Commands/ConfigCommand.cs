@@ -10,7 +10,12 @@ namespace Thirain.Commands
 {
     public class ConfigCommand : CommandBase
     {
-        public ConfigCommand(DataAccessLayer dal) : base(dal) { }
+ 
+        public ConfigCommand(IUnitOfWorkServer dal) 
+            : base(dal) 
+        {
+        }
+
 
 
         [Command("help")]
@@ -38,9 +43,29 @@ namespace Thirain.Commands
 
         [Command("setchannel")]
         [RequireUserPermission(Discord.GuildPermission.ManageGuild)]
-        public async Task ConfigChannelAsync(string command, string command1)
+        public async Task ConfigChannelAsync(string guild, string channel, string command)
         {
-            await ReplyAsync(command + " " + command1);
+            if (!_channels.Contains(command))
+            {
+                await ReplyAsync("Kein gültiges Command zum konfigurieren.Für weitere Informationen nutzen Sie !confighelp");
+                return;
+            }
+
+            ulong cid = 0;
+            ulong sid = 0;
+            try
+            {
+                sid = Convert.ToUInt64(guild);
+                cid = Convert.ToUInt64(channel);
+            } 
+            catch (Exception)
+            {
+                await ReplyAsync("Beim konfigurieren ist ein Fehler aufgetreten. Für weitere Informationen nutzen Sie !confighelp");
+                return;
+            }
+
+            string reply = _dal.InsertConfigForCommand(sid, cid, command).Result;
+            await ReplyAsync(reply);
         }
     }
 }

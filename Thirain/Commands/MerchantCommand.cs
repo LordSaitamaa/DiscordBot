@@ -9,7 +9,7 @@ namespace Thirain.Commands
 {
     public class MerchantCommand : CommandBase
     {
-        public MerchantCommand(DataAccessLayer dal) : base(dal) { }
+        public MerchantCommand(IUnitOfWorkServer dal) : base(dal) { }
 
 
     }
