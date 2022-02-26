@@ -50,7 +50,10 @@ namespace Thirain.Globals
         {
             var ben = new MerchantDTO() { Name = "Ben", Items = new List<MerchantItem>(), Locations = new List<string>()};
 
-            // Init Locations
+            // init Spawntime
+            ben.SpawnTimes = new List<string> { "12:30", "15:30", "16:30", "18:30", "19:30", "22:30", "0:30", "3:30", "4:30", "6:30", "7:30", "10:30" };
+
+            // Init Locations and Items
             ben.Locations = new List<string>() { "Ankumo Mountain", "Loghill", "Rethramis Border"};
             ben.Items.Add(new MerchantItem() { Itemname = "Fancier Bouquet", emote = _guildEmotes.FirstOrDefault(x => x.Name == "lostarkTest"), category = eItemCategory.Rapport });
             ben.Items.Add(new MerchantItem() { Itemname = "Prideholme Potato", emote = _guildEmotes.FirstOrDefault(x => x.Name == "lostarkTest"), category = eItemCategory.Rapport });
@@ -65,6 +68,9 @@ namespace Thirain.Globals
         {
             var lucas = new MerchantDTO() { Name = "Lucas", Items = new List<MerchantItem>(), Locations = new List<string>() };
 
+            // init Spawntime
+            lucas.SpawnTimes = new List<string> { "1:30", "4:30", "5:30", "7:30", "8:30", "11:30", "13:30", "16:30", "17:30", "19:30", "20:30", "23:30" };
+
             // Init Locations
             lucas.Locations = new List<string>() { "Saland Hill", "Ozhorn Hill" };
             lucas.Items.Add(new MerchantItem() { Itemname = "Yudia Spellbook", emote = _guildEmotes.FirstOrDefault(x => x.Name == "lostarkTest"), category = eItemCategory.Rapport });
@@ -78,6 +84,9 @@ namespace Thirain.Globals
         private static void InitMalone(List<MerchantDTO> merchants)
         {
             var malone = new MerchantDTO() { Name = "Malone", Items = new List<MerchantItem>(), Locations = new List<string>() };
+
+            // init Spawntime
+            malone.SpawnTimes = new List<string> { "12:30", "15:30", "16:30", "19:30", "22:30", "0:30", "3:30", "4:30", "6:30", "7:30", "10:30"};
 
             // Init Locations
             malone.Locations = new List<string>() { "Mount Zagoras", "Lakebar", "Medrick Monastery", "Bilbrin Forest" };
@@ -94,6 +103,9 @@ namespace Thirain.Globals
         private static void InitMorris(List<MerchantDTO> merchants)
         {
             var morris = new MerchantDTO() { Name = "Morris", Items = new List<MerchantItem>(), Locations = new List<string>() };
+
+            // init Spawntime
+            morris.SpawnTimes = new List<string> { "1:30", "4:30", "5:30", "7:30", "8:30", "11:30", "13:30", "16:30", "17:30", "19:30", "20:30", "23:30" };
 
             // Init Locations
             morris.Locations = new List<string>() { "Dyorika Plains", "Sunbright Hill", "Flowring Orchard" };
@@ -113,6 +125,9 @@ namespace Thirain.Globals
         {
             var burt = new MerchantDTO() { Name = "Burt", Items = new List<MerchantItem>(), Locations = new List<string>() };
 
+            // init Spawntime
+            burt.SpawnTimes = new List<string> { "12:30", "15:30", "16:30", "19:30", "22:30", "0:30", "3:30", "4:30", "6:30", "7:30", "10:30" };
+
             // Init Locations
             burt.Locations = new List<string>() { "Blackrose Chapel", "Leyar Terrace", "Borea's Domain", "Croconys Seashore" };
             burt.Items.Add(new MerchantItem() { Itemname = "Azenaporium Brooch", emote = _guildEmotes.FirstOrDefault(x => x.Name == "lostarkTest"), category = eItemCategory.Rapport });
@@ -130,6 +145,9 @@ namespace Thirain.Globals
         {
             var oliver = new MerchantDTO() { Name = "Oliver", Items = new List<MerchantItem>(), Locations = new List<string>() };
 
+            // init Spawntime
+            oliver.SpawnTimes = new List<string> { "12:30", "15:30", "16:30", "19:30", "22:30", "0:30", "3:30", "4:30", "6:30", "7:30", "10:30" };
+
             // Init Locations
             oliver.Locations = new List<string>() { "Seaswept Woods", "Sweetwater Forest", "Skyreach Steppe", "Forest of Giants" };
             oliver.Items.Add(new MerchantItem() { Itemname = "Mokoko Carrot", emote = _guildEmotes.FirstOrDefault(x => x.Name == "lostarkTest"), category = eItemCategory.Rapport });
@@ -145,6 +163,9 @@ namespace Thirain.Globals
         {
             var mac = new MerchantDTO() { Name = "Mac", Items = new List<MerchantItem>(), Locations = new List<string>() };
 
+            // init Spawntime
+            mac.SpawnTimes = new List<string> { "1:30", "4:30", "5:30", "7:30", "8:30", "11:30", "13:30", "16:30", "17:30", "19:30", "20:30", "23:30" };
+
             // Init Locations
             mac.Locations = new List<string>() { "Delphi Township", "Rattan Hill", "Melody Forest", "Twilight Mists" };
             mac.Items.Add(new MerchantItem() { Itemname = "Tournament Entrance Stamp", emote = _guildEmotes.FirstOrDefault(x => x.Name == "lostarkTest"), category = eItemCategory.Rapport });
@@ -158,6 +179,9 @@ namespace Thirain.Globals
         private static void InitNox(List<MerchantDTO> merchants)
         {
             var nox = new MerchantDTO() { Name = "Nox", Items = new List<MerchantItem>(), Locations = new List<string>() };
+
+            // init Spawntime
+            nox.SpawnTimes = new List<string> { "12:30", "15:30", "16:30", "19:30", "22:30", "0:30", "3:30", "4:30", "6:30", "7:30", "10:30" };
 
             // Init Locations
             nox.Locations = new List<string>() { "Arid Path", "Scraplands", "Nebel Horn", "Windbringer Hill", "Tottrich", "Rizza Falls" };
@@ -173,6 +197,9 @@ namespace Thirain.Globals
         private static void InitPeter(List<MerchantDTO> merchants)
         {
             var peter = new MerchantDTO() { Name = "Peter", Items = new List<MerchantItem>(), Locations = new List<string>() };
+
+            // init Spawntime
+            peter.SpawnTimes = new List<string> { "12:30", "15:30", "16:30", "18:30", "19:30", "22:30", "0:30", "3:30", "4:30", "6:30", "7:30", "10:30" };
 
             // Init Locations
             peter.Locations = new List<string>() { "Port Krona", "Parna Forest", "Fesnar Highland", "Vernese Forest", "Balankar Mountain" };
@@ -192,6 +219,9 @@ namespace Thirain.Globals
         {
             var jeffrey = new MerchantDTO() { Name = "Jeffrey", Items = new List<MerchantItem>(), Locations = new List<string>() };
 
+            // init Spawntime
+            jeffrey.SpawnTimes = new List<string> { "1:30", "4:30", "5:30", "7:30", "8:30", "11:30", "13:30", "16:30", "17:30", "19:30", "20:30", "23:30" };
+
             // Init Locations
             jeffrey.Locations = new List<string>() { "Frozen Sea", "Bitterwind Hill", "Iceblood Plateau", "Lake Eternity", "Icewing Heights" };
             jeffrey.Items.Add(new MerchantItem() { Itemname = "Shimmering Essence", emote = _guildEmotes.FirstOrDefault(x => x.Name == "lostarkTest"), category = eItemCategory.Rapport });
@@ -205,6 +235,9 @@ namespace Thirain.Globals
         private static void InitAricer(List<MerchantDTO> merchants)
         {
             var aricer = new MerchantDTO() { Name = "Aricer", Items = new List<MerchantItem>(), Locations = new List<string>() };
+
+            // init Spawntime
+            aricer.SpawnTimes = new List<string> { "12:30", "15:30", "16:30", "19:30", "22:30", "0:30", "3:30", "4:30", "6:30", "7:30", "10:30" };
 
             // Init Locations
             aricer.Locations = new List<string>() { "Lake Shiverwave", "Glass Lotus Lake", "Breezesome Brae", "Xeneela Ruins", "Elzowin's Shade" };
@@ -223,6 +256,9 @@ namespace Thirain.Globals
         {
             var raitir = new MerchantDTO() { Name = "Raitir", Items = new List<MerchantItem>(), Locations = new List<string>() };
 
+            // init Spawntime
+            raitir.SpawnTimes = new List<string> { "12:30", "15:30", "16:30", "18:30", "19:30", "22:30", "0:30", "3:30", "4:30", "6:30", "7:30", "10:30" };
+
             // Init Locations
             raitir.Locations = new List<string>() { "Yorn's Cradle", "Unfinished Garden", "Black Anvil Mine", "Iron Hammer Mine", "Hall of Promise" };
             raitir.Items.Add(new MerchantItem() { Itemname = "Piyer's Secret Textbook", emote = _guildEmotes.FirstOrDefault(x => x.Name == "lostarkTest"), category = eItemCategory.Rapport });
@@ -237,6 +273,9 @@ namespace Thirain.Globals
         private static void InitDorella(List<MerchantDTO> merchants)
         {
             var dorella = new MerchantDTO() { Name = "Dorella", Items = new List<MerchantItem>(), Locations = new List<string>() };
+
+            // init Spawntime
+            dorella.SpawnTimes = new List<string> { "1:30", "4:30", "5:30", "7:30", "8:30", "11:30", "13:30", "16:30", "17:30", "19:30", "20:30", "23:30" };
 
             // Init Locations
             dorella.Locations = new List<string>() { "Kallazar" };
@@ -254,6 +293,9 @@ namespace Thirain.Globals
         private static void InitRayni(List<MerchantDTO> merchants)
         {
             var rayni = new MerchantDTO() { Name = "Rayni", Items = new List<MerchantItem>(), Locations = new List<string>() };
+
+            // init Spawntime
+            rayni.SpawnTimes = new List<string> { "12:30", "15:30", "16:30", "19:30", "22:30", "0:30", "3:30", "4:30", "6:30", "7:30", "10:30" };
 
             // Init Locations
             rayni.Locations = new List<string>() { "Tideshelf Path", "Starsand Beach", "Tikatika Colony", "Secret Forest" };

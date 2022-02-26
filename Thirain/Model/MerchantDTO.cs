@@ -11,6 +11,6 @@ namespace Thirain.Model
         public string Name { get; set; }
         public List<MerchantItem> Items { get; set;}
         public List<string> Locations { get; set; }
-        public List<DateTime> SpawnTimes { get; set; }
+        public List<string> SpawnTimes { get; set; }
     }
 }
