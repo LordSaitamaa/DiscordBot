@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Discord;
+using Microsoft.EntityFrameworkCore;
 using Thirain.Data.Models;
 using Thirain.Data.TDBContext;
 
@@ -17,7 +18,7 @@ namespace Thirain.Data.DataAccess
         {
             List<Config> retList = new List<Config>();
            using (var context = _contextFactory.CreateDbContext())
-                retList = await context.Configs.Where(x => x.Commands.Contains(cmdName)).ToListAsync<Config>();
+                retList = await context.Config.Where(x => x.Commands.Contains(cmdName)).ToListAsync<Config>();
 
             return retList;
         }
@@ -30,12 +31,12 @@ namespace Thirain.Data.DataAccess
         /// <param name="cmdName"></param> Command which should be inserted
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<string> InsertConfigForCommand(ulong sid, ulong cid, string cmdName)
+        public async Task<string> InsertConfigForCommand(long sid, long cid, string cmdName)
         {
             string retString = string.Empty;
             using (var context = _contextFactory.CreateDbContext())
             {
-                var guild = await context.Configs.FirstOrDefaultAsync(x => x.SID == sid && x.Commands.Equals(cmdName));
+                var guild = await context.Config.FirstOrDefaultAsync(x => x.SID == sid && x.Commands.Equals(cmdName));
                 if (guild == null)
                 {
                     guild = context.Add(new Config { SID = sid, CID = cid, Commands = cmdName }).Entity;

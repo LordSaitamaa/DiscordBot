@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Discord;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,6 @@ namespace Thirain.Data.DataAccess
     {
         public Task<List<Config>> GetConfigsByNameAsync(string cmdName);
 
-        public Task<string> InsertConfigForCommand(ulong sid, ulong cid, string cmdName);
+        public Task<string> InsertConfigForCommand(long sid, long cid, string cmdName);
     }
 }

@@ -12,7 +12,9 @@ namespace Thirain.Data.TDBContext
     {
         public ThirainDbContext(DbContextOptions options) : base(options) { }
 
-        public DbSet<Config> Configs { get; set; }
-        public DbSet<Event> Events { get; set; }
+        public DbSet<Config> Config { get; set; }
+        public DbSet<Event> Event { get; set; }
+        public DbSet<User> User { get; set; }
+        public DbSet<EventParticipants> EventParticipants { get; set; }
     }
 }

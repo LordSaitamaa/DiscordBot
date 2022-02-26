@@ -50,13 +50,13 @@ namespace Thirain.Commands
                 await ReplyAsync("Kein gültiges Command zum konfigurieren.Für weitere Informationen nutzen Sie !confighelp");
                 return;
             }
-
-            ulong cid = 0;
-            ulong sid = 0;
+          
+            long cid = 0;
+            long sid = 0;
             try
             {
-                sid = Convert.ToUInt64(guild);
-                cid = Convert.ToUInt64(channel);
+                sid = Convert.ToInt64(guild);
+                cid = Convert.ToInt64(channel);
             } 
             catch (Exception)
             {
@@ -64,6 +64,7 @@ namespace Thirain.Commands
                 return;
             }
 
+            
             string reply = _dal.InsertConfigForCommand(sid, cid, command).Result;
             await ReplyAsync(reply);
         }

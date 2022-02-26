@@ -14,6 +14,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Thirain.Data.DataAccess;
+using Thirain.Globals;
 using Thirain.Model;
 
 namespace Thirain.CommandHandler
@@ -26,6 +27,9 @@ namespace Thirain.CommandHandler
         private readonly DiscordShardedClient _client;
         private System.Timers.Timer eventTimer;
         private ulong _serverId;
+        private readonly IReadOnlyCollection<GuildEmote> _guildEmotes;
+        private List<MerchantDTO> _merchantDTOs;
+
         public ThirainCommandHandler(DiscordShardedClient client, ILogger<DiscordShardedClientService> logger, IServiceProvider provider, CommandService commandService, IConfiguration config, IUnitOfWorkServer dataAccessLayer) 
             : base(client, logger, config, dataAccessLayer)
         {
@@ -34,6 +38,22 @@ namespace Thirain.CommandHandler
             _commandService = commandService;
             _config = config;
             _serverId = GetServerId();
+            _guildEmotes = InitGuildEmotes();
+            _merchantDTOs = MerchantFactory.GetMerchants(_guildEmotes);
+        }
+
+        private IReadOnlyCollection<GuildEmote> InitGuildEmotes()
+        {
+            IReadOnlyCollection<GuildEmote> emotes = null;
+            try
+            {
+                 emotes = _client.GetGuild(_serverId).Emotes;
+            }
+            catch (Exception ex)
+            {
+                Logger.LogCritical($"Server not found : {ex.Message}");
+            }
+            return emotes;
         }
 
         private ulong GetServerId()
@@ -51,8 +71,8 @@ namespace Thirain.CommandHandler
 
             await _client.WaitForReadyAsync(stoppingToken);
 
-            eventTimer = new System.Timers.Timer(5000);
-            eventTimer.Elapsed += async (sender, e) => await MerchantTimerCallback(EmoteCollection.GetEmotes(_client.GetGuild(_serverId).Emotes));
+            eventTimer = new System.Timers.Timer(60000);
+            eventTimer.Elapsed += async (sender, e) => await MerchantTimerCallback();
             eventTimer.Start();
         }
 
@@ -60,6 +80,7 @@ namespace Thirain.CommandHandler
         {
             if (!(rawMessage is SocketUserMessage message))
                 return;
+
             if (message.Source != MessageSource.User)
                 return;
 
@@ -70,7 +91,7 @@ namespace Thirain.CommandHandler
             var context = new ShardedCommandContext(_client, message);
             await _commandService.ExecuteAsync(context, argpos, _provider);
         }
-
+        
         private async Task OnCommandExecuted(Optional<CommandInfo> commandInfo, ICommandContext commandContext, IResult result)
         {
             if (!commandInfo.IsSpecified)
@@ -82,17 +103,18 @@ namespace Thirain.CommandHandler
             await commandContext.Channel.SendMessageAsync($"error: {result.ErrorReason} ");
         }
 
-        private async Task MerchantTimerCallback(IReadOnlyCollection<GuildEmote> guildEmotes)
+        private async Task MerchantTimerCallback()
         {
             //var ch = _client.GetGuild(942103230517772388);
             //var guilds = Client.Guilds.Count();
             var guilds = await DataAccessLayer.GetConfigsByNameAsync("merchant");
             foreach (var guild in guilds)
             {
-                var ch = _client.GetGuild(_serverId)?.GetChannel(432) as IMessageChannel;
+                var ch = _client.GetGuild((ulong)guild.SID)?.GetChannel((ulong)guild.CID) as IMessageChannel;
                 if (ch != null)
                 {
                     var message = await ch.SendMessageAsync("```Test: " + DateTime.Now.Hour + ":" + DateTime.Now.Minute + "```");
+
 
                     //var emoji = (GuildEmote)emote.FirstOrDefault(x => x.Name == "lostarkTest");// as GuildEmote;
                     //var emoteeee = Emote.Parse($"<:{emoji.Name}:{emoji.Id}>");
