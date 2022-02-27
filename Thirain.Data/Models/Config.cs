@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Thirain.Data.Models
+﻿namespace Thirain.Data.Models
 {
     public class Config : Entity
     {

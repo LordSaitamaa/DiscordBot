@@ -1,5 +1,4 @@
-﻿using Discord;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Thirain.Data.Models;
 using Thirain.Data.TDBContext;
 
