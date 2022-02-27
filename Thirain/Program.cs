@@ -16,7 +16,7 @@ namespace Thirain
     {
         static async Task Main(string[] args)
         {
-            var builder = Host.CreateDefaultBuilder()
+            var builder = new HostBuilder()
                 .ConfigureAppConfiguration(x =>
                 {
                     var config = new ConfigurationBuilder()
@@ -30,20 +30,21 @@ namespace Thirain
                     x.AddConsole();
                     x.SetMinimumLevel(LogLevel.Debug);
                 })
-                .ConfigureDiscordHost((context, config) =>
+                .ConfigureDiscordShardedHost((context, config) =>
                 {
                     config.SocketConfig = new DiscordSocketConfig
                     {
                         LogLevel = Discord.LogSeverity.Debug,
                         AlwaysDownloadUsers = false,
-                        MessageCacheSize = 200
+                        MessageCacheSize = 200,
+                        TotalShards = 4
                     };
 
                     config.Token = context.Configuration["Token"];
                 })
                 .UseCommandService((context, config) =>
                 {
-                    config.CaseSensitiveCommands = true;
+                    config.CaseSensitiveCommands = false;
                     config.LogLevel = Discord.LogSeverity.Debug;
                     config.DefaultRunMode = Discord.Commands.RunMode.Sync;
                 })
@@ -52,11 +53,14 @@ namespace Thirain
                     services
                       .AddHostedService<ThirainCommandHandler>()
                       .AddDbContextFactory<ThirainDbContext>(options => options.UseNpgsql(context.Configuration.GetConnectionString("Default")))
-                      .AddSingleton<DataAccessLayer>();
+                      .AddSingleton<IUnitOfWorkServer, UnitOfWorkServer>();                                          
                 })
                 .UseConsoleLifetime();
 
-            await builder.StartAsync();
+            var host = builder.Build();
+
+            using(host)
+                await host.RunAsync();
         }
     }
 }

@@ -6,14 +6,14 @@ using Thirain.Data.DataAccess;
 
 namespace Thirain.CommandHandler
 {
-    public abstract class ThirainCommandService : DiscordClientService
+    public abstract class ThirainCommandService : DiscordShardedClientService //DiscordClientService
     {
-        public readonly DiscordSocketClient Client;
-        public readonly ILogger<DiscordClientService> Logger;
+        public readonly DiscordShardedClient Client;
+        public readonly ILogger<DiscordShardedClientService> Logger;
         public readonly IConfiguration Configuration;
-        public readonly DataAccessLayer DataAccessLayer;
-
-        public ThirainCommandService(DiscordSocketClient client, ILogger<DiscordClientService> logger, IConfiguration configuration, DataAccessLayer dataAccessLayer)
+        public readonly IUnitOfWorkServer DataAccessLayer;
+        public ThirainCommandService(DiscordShardedClient client, ILogger<DiscordShardedClientService> logger, 
+                                    IConfiguration configuration, IUnitOfWorkServer dataAccessLayer)
             : base(client, logger)
         {
             Client = client;
