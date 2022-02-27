@@ -12,7 +12,7 @@ namespace Thirain.Commands
 {
     public abstract class CommandBase : ModuleBase<SocketCommandContext>
     {
-        public readonly IUnitOfWorkServer _dal;
+        protected readonly IUnitOfWorkServer _dal;
         protected readonly List<string> _channels;
         protected CommandBase(IUnitOfWorkServer dal)
         {

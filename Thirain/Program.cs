@@ -53,8 +53,7 @@ namespace Thirain
                     services
                       .AddHostedService<ThirainCommandHandler>()
                       .AddDbContextFactory<ThirainDbContext>(options => options.UseNpgsql(context.Configuration.GetConnectionString("Default")))
-                      .AddSingleton<IUnitOfWorkServer, UnitOfWorkServer>();
-                    
+                      .AddSingleton<IUnitOfWorkServer, UnitOfWorkServer>();                                          
                 })
                 .UseConsoleLifetime();
 

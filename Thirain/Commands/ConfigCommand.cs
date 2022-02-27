@@ -41,31 +41,18 @@ namespace Thirain.Commands
             await Discord.UserExtensions.SendMessageAsync(u, command);
         }
 
+
         [Command("setchannel")]
         [RequireUserPermission(Discord.GuildPermission.ManageGuild)]
-        public async Task ConfigChannelAsync(string guild, string channel, string command)
+        public async Task ConfigChannelAsync(string command)
         {
             if (!_channels.Contains(command))
             {
                 await ReplyAsync("Kein gültiges Command zum konfigurieren.Für weitere Informationen nutzen Sie !confighelp");
                 return;
-            }
-          
-            long cid = 0;
-            long sid = 0;
-            try
-            {
-                sid = Convert.ToInt64(guild);
-                cid = Convert.ToInt64(channel);
-            } 
-            catch (Exception)
-            {
-                await ReplyAsync("Beim konfigurieren ist ein Fehler aufgetreten. Für weitere Informationen nutzen Sie !confighelp");
-                return;
-            }
-
+            }          
             
-            string reply = _dal.InsertConfigForCommand(sid, cid, command).Result;
+            string reply = _dal.InsertConfigForCommand((long)Context.Guild.Id, (long)Context.Channel.Id, command).Result;
             await ReplyAsync(reply);
         }
     }

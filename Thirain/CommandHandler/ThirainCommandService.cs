@@ -1,4 +1,5 @@
 ﻿using Discord.Addons.Hosting;
+using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -12,8 +13,8 @@ namespace Thirain.CommandHandler
         public readonly ILogger<DiscordShardedClientService> Logger;
         public readonly IConfiguration Configuration;
         public readonly IUnitOfWorkServer DataAccessLayer;
-
-        public ThirainCommandService(DiscordShardedClient client, ILogger<DiscordShardedClientService> logger, IConfiguration configuration, IUnitOfWorkServer dataAccessLayer)
+        public ThirainCommandService(DiscordShardedClient client, ILogger<DiscordShardedClientService> logger, 
+                                    IConfiguration configuration, IUnitOfWorkServer dataAccessLayer)
             : base(client, logger)
         {
             Client = client;

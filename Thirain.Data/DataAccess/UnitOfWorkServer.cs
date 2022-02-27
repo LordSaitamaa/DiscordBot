@@ -16,7 +16,7 @@ namespace Thirain.Data.DataAccess
 
         public async Task<List<Config>> GetConfigsByNameAsync(string cmdName)
         {
-            List<Config> retList = new List<Config>();
+           List<Config> retList = new List<Config>();
            using (var context = _contextFactory.CreateDbContext())
                 retList = await context.Config.Where(x => x.Commands.Contains(cmdName)).ToListAsync<Config>();
 
