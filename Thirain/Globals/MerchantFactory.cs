@@ -1,6 +1,7 @@
 ﻿using Discord;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Thirain.Model;
 
 namespace Thirain.Globals
@@ -10,12 +11,17 @@ namespace Thirain.Globals
 
         private static List<MerchantDTO> _merchants;
         private static IReadOnlyCollection<GuildEmote> _guildEmotes;
-        public static List<MerchantDTO> GetMerchants(IReadOnlyCollection<GuildEmote> guildEmotes)
+        public static async Task<List<MerchantDTO>> GetMerchants(IReadOnlyCollection<GuildEmote> guildEmotes)
         {
             if(_merchants == null)
                 _merchants = InitMerchants(guildEmotes);
 
             return _merchants;
+        }
+
+        public static async Task<MerchantDTO> GetMerchantByName(string name)
+        {
+            return _merchants.FirstOrDefault(x => x.Name.Equals(name));
         }
 
         private static List<MerchantDTO> InitMerchants(IReadOnlyCollection<GuildEmote> guildEmotes)

@@ -68,18 +68,18 @@ namespace Thirain.CommandHandler
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            _client.MessageReceived += OnMessageReceived;
-            _commandService.CommandExecuted += OnCommandExecuted;
-
             await _commandService.AddModulesAsync(Assembly.GetEntryAssembly(), _provider);
 
             await _client.WaitForReadyAsync(stoppingToken);
+
+            _client.MessageReceived += OnMessageReceived;
+            _commandService.CommandExecuted += OnCommandExecuted;
 
             _serverId = GetServerId();
 
             _guildEmotes = InitGuildEmotes();
 
-            _merchantDTO = MerchantFactory.GetMerchants(_guildEmotes);
+            _merchantDTO = MerchantFactory.GetMerchants(_guildEmotes).Result;
 
             _allSpawnTimes = InitHelper.GetAllSpawntimes();
 
@@ -202,7 +202,7 @@ namespace Thirain.CommandHandler
                 for (int i = 0; i <merchant.Locations.Count; i++)
                     reactionList.Add(EmbedBuilderHelper.NumberEmotes[i]);
 
-                dict.Add(await helper.BuildMerchantEmbed(merchant, currentSpawn), reactionList);
+                dict.Add(await helper.BuildMerchantEmbedTrackingAsync(merchant, currentSpawn), reactionList);
             }
 
             foreach (var guild in guilds)
