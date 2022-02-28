@@ -1,4 +1,5 @@
 ﻿using Discord.Commands;
+using Fergun.Interactive;
 using System.Collections.Generic;
 using Thirain.Data.DataAccess;
 
@@ -8,6 +9,7 @@ namespace Thirain.Commands
     {
         protected readonly IUnitOfWorkServer _dal;
         protected readonly List<string> _channels;
+        public InteractiveService Interactive { get; set; }
         protected CommandBase(IUnitOfWorkServer dal)
         {
             _dal = dal;

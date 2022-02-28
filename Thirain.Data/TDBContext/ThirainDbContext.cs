@@ -9,7 +9,8 @@ namespace Thirain.Data.TDBContext
 
         public DbSet<Config> Config { get; set; }
         public DbSet<Event> Event { get; set; }
-        public DbSet<User> User { get; set; }
         public DbSet<EventParticipants> EventParticipants { get; set; }
+        public DbSet<Template> Templates { get; set; }
+        public DbSet<Role> Roles { get; set; }
     }
 }

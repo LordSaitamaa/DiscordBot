@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Thirain.Data.TDBContext;
@@ -11,9 +12,10 @@ using Thirain.Data.TDBContext;
 namespace Thirain.Data.Migrations
 {
     [DbContext(typeof(ThirainDbContext))]
-    partial class ThirainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220227220840_Version2")]
+    partial class Version2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,14 +32,14 @@ namespace Thirain.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("ChannelID")
+                    b.Property<long>("CID")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Commands")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<long>("ServerID")
+                    b.Property<long>("SID")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
@@ -53,11 +55,7 @@ namespace Thirain.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("EventName")
+                    b.Property<string>("Beschreibung")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -65,10 +63,7 @@ namespace Thirain.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<long>("ServerID")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("Template")
+                    b.Property<long>("SID")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("Time")
@@ -90,8 +85,8 @@ namespace Thirain.Data.Migrations
                     b.Property<long>("EventID")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("RoleID")
-                        .HasColumnType("bigint");
+                    b.Property<int>("Rolle")
+                        .HasColumnType("integer");
 
                     b.Property<long>("UserID")
                         .HasColumnType("bigint");
@@ -105,26 +100,6 @@ namespace Thirain.Data.Migrations
                     b.ToTable("EventParticipants");
                 });
 
-            modelBuilder.Entity("Thirain.Data.Models.Role", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<long>("EventID")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("RoleName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
-                });
-
             modelBuilder.Entity("Thirain.Data.Models.Template", b =>
                 {
                     b.Property<long>("Id")
@@ -133,7 +108,7 @@ namespace Thirain.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<string>("TemplateDescription")
+                    b.Property<string>("TemplateBeschreibung")
                         .IsRequired()
                         .HasColumnType("text");
 

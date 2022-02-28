@@ -7,7 +7,9 @@ namespace Thirain.Data.Models
     {
         [ForeignKey("EventID")]
         public long EventID { get; set; }
-        [ForeignKey("UserID")]
-        public long  UserID { get; set; }   
+        public long UserID { get; set; }
+        [ForeignKey("RoleID")]
+        public long RoleID { get; set; }
+        public string UserName { get; set; }
     }
 }

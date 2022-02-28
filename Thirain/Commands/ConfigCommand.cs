@@ -1,4 +1,5 @@
-﻿using Discord.Commands;
+﻿using Discord;
+using Discord.Commands;
 using System.Threading.Tasks;
 using Thirain.Data.DataAccess;
 
@@ -7,12 +8,7 @@ namespace Thirain.Commands
     public class ConfigCommand : CommandBase
     {
  
-        public ConfigCommand(IUnitOfWorkServer dal) 
-            : base(dal) 
-        {
-        }
-
-
+        public ConfigCommand(IUnitOfWorkServer dal) : base(dal) { }
 
         [Command("help")]
         [Alias("hilfe", "h")]

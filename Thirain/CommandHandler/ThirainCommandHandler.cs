@@ -83,7 +83,7 @@ namespace Thirain.CommandHandler
 
             _allSpawnTimes = InitHelper.GetAllSpawntimes();
 
-            eventTimer = new System.Timers.Timer(60000);
+            eventTimer = new System.Timers.Timer(30000);
             eventTimer.Elapsed += async (sender, e) => await MerchantTimerCallback();
             eventTimer.Start();
         }
@@ -127,7 +127,7 @@ namespace Thirain.CommandHandler
             now = now.AddSeconds(-now.Second);
 
             // TEST 
-            //DateTime now = new DateTime(2022, 2, 27, 12, 25, 0);
+            //DateTime now = new DateTime(2022, 2, 28, 0, 20, 0);
             if (_nextSpawnTime > now)
             {
                 eventTimer.Start();
@@ -138,17 +138,23 @@ namespace Thirain.CommandHandler
             {
                 if (i == _allSpawnTimes.Count - 1)
                 {
-                    string currentTime = _allSpawnTimes[0];
+                    string nextTime = _allSpawnTimes[0];
                     DateTime nextDay = DateTime.Today.AddDays(1);
 
-                    string[] firstTimeOfDay = currentTime.Split(':');
+                    string[] firstTimeOfDay = nextTime.Split(':');
                     int firstHour = Convert.ToInt32(firstTimeOfDay[0]);
                     int firstMinute = Convert.ToInt32(firstTimeOfDay[1]);
                     nextDay = nextDay.AddHours(firstHour).AddMinutes(firstMinute);
 
                     _nextSpawnTime = nextDay;
 
-                    currentMerchants = _merchantDTO.Where(x => x.SpawnTimes.Contains(currentTime)).ToList();                   
+                    string currentTime = _allSpawnTimes[_allSpawnTimes.Count - 1];
+                    string[] splittedCurrentTime = currentTime.Split(':');
+                    int spawnHour = Convert.ToInt32(splittedCurrentTime[0]);
+                    int spawnMinute = Convert.ToInt32(splittedCurrentTime[1]);
+                    currentSpawn = DateTime.Today.AddHours(spawnHour).AddMinutes(spawnMinute);
+                    currentMerchants = _merchantDTO.Where(x => x.SpawnTimes.Contains(currentTime)).ToList();  
+                    
                 }
                 else
                 {
@@ -209,7 +215,7 @@ namespace Thirain.CommandHandler
             {
                 try
                 {
-                    var ch = _client.GetGuild((ulong)guild.SID)?.GetChannel((ulong)guild.CID) as IMessageChannel;
+                    var ch = _client.GetGuild((ulong)guild.ServerID)?.GetChannel((ulong)guild.ChannelID) as IMessageChannel;
 
                     if (ch != null)
                     {

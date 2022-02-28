@@ -89,6 +89,5 @@ namespace Thirain.Helper
 
             return embed.Build();
         }
-
     }
 }

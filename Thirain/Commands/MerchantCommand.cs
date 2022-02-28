@@ -18,7 +18,7 @@ namespace Thirain.Commands
             if(string.IsNullOrEmpty(merchantName))
                 await ReplyAsync("No merchant name was entered.");
 
-            string toUpperMerchantName = char.ToUpper(merchantName[0]).ToString() + merchantName.Substring(1);
+            string toUpperMerchantName = char.ToUpper(merchantName[0]).ToString() + merchantName[1..];
 
             var merchant = await MerchantFactory.GetMerchantByName(toUpperMerchantName);
 
