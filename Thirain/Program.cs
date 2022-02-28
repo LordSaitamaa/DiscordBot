@@ -35,7 +35,7 @@ namespace Thirain
                 {
                     config.SocketConfig = new DiscordSocketConfig
                     {
-                        LogLevel = Discord.LogSeverity.Debug,
+                        LogLevel = Discord.LogSeverity.Warning,
                         AlwaysDownloadUsers = false,
                         MessageCacheSize = 200,
                         TotalShards = 4
@@ -46,7 +46,7 @@ namespace Thirain
                 .UseCommandService((context, config) =>
                 {
                     config.CaseSensitiveCommands = false;
-                    config.LogLevel = Discord.LogSeverity.Debug;
+                    config.LogLevel = Discord.LogSeverity.Warning;
                     config.DefaultRunMode = Discord.Commands.RunMode.Sync;
                 })
                 .ConfigureServices((context, services) =>

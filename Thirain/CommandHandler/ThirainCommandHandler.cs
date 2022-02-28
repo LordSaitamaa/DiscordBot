@@ -30,7 +30,7 @@ namespace Thirain.CommandHandler
         private ulong _serverId;
         private IReadOnlyCollection<GuildEmote> _guildEmotes;
         private List<MerchantDTO> _merchantDTO;
-        private List<string> _allSpawnTimes;
+        private List<DateTime> _allSpawnTimes;
         private DateTime _nextSpawnTime;
 
         public ThirainCommandHandler(DiscordShardedClient client, ILogger<DiscordShardedClientService> logger, 
@@ -138,59 +138,40 @@ namespace Thirain.CommandHandler
             {
                 if (i == _allSpawnTimes.Count - 1)
                 {
-                    string nextTime = _allSpawnTimes[0];
+                    DateTime nextTime = _allSpawnTimes[0];
                     DateTime nextDay = DateTime.Today.AddDays(1);
-
-                    string[] firstTimeOfDay = nextTime.Split(':');
-                    int firstHour = Convert.ToInt32(firstTimeOfDay[0]);
-                    int firstMinute = Convert.ToInt32(firstTimeOfDay[1]);
-                    nextDay = nextDay.AddHours(firstHour).AddMinutes(firstMinute);
+                    nextDay = nextDay.AddHours(nextTime.Hour).AddMinutes(nextTime.Minute);
 
                     _nextSpawnTime = nextDay;
 
-                    string currentTime = _allSpawnTimes[_allSpawnTimes.Count - 1];
-                    string[] splittedCurrentTime = currentTime.Split(':');
-                    int spawnHour = Convert.ToInt32(splittedCurrentTime[0]);
-                    int spawnMinute = Convert.ToInt32(splittedCurrentTime[1]);
-                    currentSpawn = DateTime.Today.AddHours(spawnHour).AddMinutes(spawnMinute);
-                    currentMerchants = _merchantDTO.Where(x => x.SpawnTimes.Contains(currentTime)).ToList();  
+                    DateTime currentTime = _allSpawnTimes[_allSpawnTimes.Count - 1];
+                    currentSpawn = DateTime.Today.AddHours(currentTime.Hour).AddMinutes(currentTime.Minute);
+                    currentMerchants = _merchantDTO.Where(x => x.SpawnTimes.Contains($"{currentTime.Hour}:{currentTime.Minute}")).ToList();  
                     
                 }
                 else
                 {
-                    string nextSpawnTime = _allSpawnTimes[i];
-                    string[] splittedNextTime = nextSpawnTime.Split(':');          
-                    int spawnHour = Convert.ToInt32(splittedNextTime[0]);
-                    int spawnMinute = Convert.ToInt32(splittedNextTime[1]);
-                    DateTime nextSpawn = DateTime.Today.AddHours(spawnHour).AddMinutes(spawnMinute);
+                    DateTime nextSpawnTime = _allSpawnTimes[i];
+                    DateTime nextSpawn = DateTime.Today.AddHours(nextSpawnTime.Hour).AddMinutes(nextSpawnTime.Minute);
 
                     if (nextSpawn < now)
                         continue;
 
                     _nextSpawnTime = nextSpawn;
 
-                    string lastSpawn = string.Empty;
-                    string[] splittedCurrentTime = new string[0];
-                    int currentSpawnHour = 0; ;
-                    int currentSpawnMinute = 0;
+                    DateTime lastSpawn = DateTime.MinValue;
 
                     if (i > 0)
                     {
                         lastSpawn = _allSpawnTimes[i - 1];
-                        splittedCurrentTime = lastSpawn.Split(':');
-                        currentSpawnHour = Convert.ToInt32(splittedCurrentTime[0]);
-                        currentSpawnMinute = Convert.ToInt32(splittedCurrentTime[1]);
-                        currentSpawn = DateTime.Today.AddHours(currentSpawnHour).AddMinutes(currentSpawnMinute);
-                        currentMerchants = _merchantDTO.Where(x => x.SpawnTimes.Contains(lastSpawn)).ToList();
+                        currentSpawn = DateTime.Today.AddHours(lastSpawn.Hour).AddMinutes(lastSpawn.Minute);
+                        currentMerchants = _merchantDTO.Where(x => x.SpawnTimes.Contains($"{lastSpawn.Hour}:{lastSpawn.Minute}")).ToList();
                     }
                     else
                     {
-                        lastSpawn = _allSpawnTimes[_allSpawnTimes.Count - 1];
-                        splittedCurrentTime = lastSpawn.Split(':');
-                        currentSpawnHour = Convert.ToInt32(splittedCurrentTime[0]);
-                        currentSpawnMinute = Convert.ToInt32(splittedCurrentTime[1]);
-                        currentSpawn = DateTime.Today.AddDays(-1).AddHours(currentSpawnHour).AddMinutes(currentSpawnMinute);
-                        currentMerchants = _merchantDTO.Where(x => x.SpawnTimes.Contains(lastSpawn)).ToList();
+                        lastSpawn = _allSpawnTimes[_allSpawnTimes.Count - 1];  
+                        currentSpawn = DateTime.Today.AddDays(-1).AddHours(lastSpawn.Hour).AddMinutes(lastSpawn.Minute);
+                        currentMerchants = _merchantDTO.Where(x => x.SpawnTimes.Contains($"{lastSpawn.Hour}:{lastSpawn.Minute}")).ToList();
                     }
                     break;
                 }
