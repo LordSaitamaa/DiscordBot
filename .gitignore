@@ -398,4 +398,6 @@ FodyWeavers.xsd
 *.sln.iml
 *.vs/LABot/xs
 ## Test
-/LABot/appsettings.json
+*/appsettings.json
+*/dbsettings.json
+*/basicEmoteServer.json

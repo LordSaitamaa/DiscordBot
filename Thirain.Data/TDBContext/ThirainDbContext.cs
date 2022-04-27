@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Thirain.Data.Models;
 
 namespace Thirain.Data.TDBContext
@@ -12,7 +7,13 @@ namespace Thirain.Data.TDBContext
     {
         public ThirainDbContext(DbContextOptions options) : base(options) { }
 
-        public DbSet<Config> Configs { get; set; }
-        public DbSet<Event> Events { get; set; }
+        public DbSet<Config> Config { get; set; }
+        public DbSet<EventConfig> EventConfig { get; set; }
+        public DbSet<EventManagerRoles> EventManagerRoles { get; set; }
+        public DbSet<Event> Event { get; set; }
+        public DbSet<EventParticipants> EventParticipants { get; set; }
+        public DbSet<EventRole> EventRoles { get; set; }
+        public DbSet<SubRole> SubRoles { get; set; }
+        public DbSet<Template> Templates { get; set; }
     }
 }

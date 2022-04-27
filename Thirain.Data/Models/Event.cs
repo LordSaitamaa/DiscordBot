@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Thirain.Data.Models
 {
     public class Event : Entity
     {
-        public long SID { get; set; }
-        public string CID { get; set; } 
-        public string User { get; set; }
-        public string Text { get; set; }
-
+        [Required]
+        public long ServerID { get; set; }
+        public string Initiator { get; set; }
+        public string EventName { get; set; }
+        public string Description { get; set; }
+        public DateTime Time { get; set; }
+        public int TemplateType { get; set; }
+        public ICollection<EventParticipants> EventParticipants { get; set; }
     }
 }

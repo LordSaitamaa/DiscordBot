@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Thirain.Data.Models
 {
     public abstract class Entity
     {
         [Key]
-        public long Id { get; set; }  
+        public long ID { get; set; }  
     }
 }
