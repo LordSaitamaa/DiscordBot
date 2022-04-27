@@ -20,7 +20,7 @@ namespace Thirain.Commands
         {
             List<string> retList = new List<string>();
             retList.Add("merchant");
-            retList.Add("raid");
+            retList.Add("event");
 
             return retList;
         }

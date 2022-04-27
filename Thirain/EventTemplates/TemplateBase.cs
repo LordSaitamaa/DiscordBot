@@ -1,28 +1,33 @@
-﻿using System;
+﻿using Discord;
+using Discord.Commands;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Thirain.Data.DataAccess;
+using Thirain.Data.Models;
 
 namespace Thirain.EventTemplates
 {
     public abstract class TemplateBase : ITemplate
     {
         public eEventTemplateType Type { get; set; }
-        public string Name { get; set; }
-        public long ID { get; set; }
-        public string Rolle { get; set; }
-        public string Initiator { get; set; }
-        public DateTime EventTime { get; set; }
+        protected string Description { get; set; }
+        public abstract string Name { get; set; }
+        protected abstract List<EventRole> RoleList { get; set; }
+        protected abstract List<GuildEmote> GuildEmoteList { get; set; }
+        protected abstract string TemplateDescription { get; set; }
+        protected abstract int Notification { get; set; }
 
+        protected SocketCommandContext _ctx;
+        protected IUnitOfWorkServer _dal;
 
-        protected virtual async Task SaveEvent() { }
-        private readonly IUnitOfWorkServer _dal;
-
-        public TemplateBase(IUnitOfWorkServer dal)
+        protected TemplateBase(SocketCommandContext ctx, IUnitOfWorkServer dal, eEventTemplateType type)
         {
+            Type = type;
+            _ctx = ctx;
             _dal = dal;
         }
+
+        public virtual Task<Embed> BuildEmbedFromTemplate(Event evt,  SocketCommandContext ctx) { throw new NotImplementedException(); }
     }
 }

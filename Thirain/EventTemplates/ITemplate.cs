@@ -1,24 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Discord;
+using Discord.Commands;
+using System;
 using System.Threading.Tasks;
+using Thirain.Data.Models;
 
 namespace Thirain.EventTemplates
 {
     public enum eEventTemplateType
     {
-        Besprechung = 1,
-        Raid = 2,
+        Custom = 1,
+        LostArk = 2,
     }
 
     public interface ITemplate
     {
         public eEventTemplateType Type { get; set; }
-        public string Name { get; set; }
-        public long ID { get; set; }
-        public string Rolle { get; set; }
-        public string Initiator { get; set; }
-        public DateTime EventTime { get; set; }
+        public abstract Task<Embed> BuildEmbedFromTemplate(Event evt, SocketCommandContext ctx);
     }
 }

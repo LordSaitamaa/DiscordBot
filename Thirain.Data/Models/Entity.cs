@@ -5,6 +5,6 @@ namespace Thirain.Data.Models
     public abstract class Entity
     {
         [Key]
-        public long Id { get; set; }  
+        public long ID { get; set; }  
     }
 }

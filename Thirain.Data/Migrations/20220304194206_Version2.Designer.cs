@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Thirain.Data.TDBContext;
@@ -11,9 +12,10 @@ using Thirain.Data.TDBContext;
 namespace Thirain.Data.Migrations
 {
     [DbContext(typeof(ThirainDbContext))]
-    partial class ThirainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220304194206_Version2")]
+    partial class Version2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

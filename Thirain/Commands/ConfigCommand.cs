@@ -44,7 +44,7 @@ namespace Thirain.Commands
                 return;
             }          
             
-            string reply = _dal.InsertConfigForCommand((long)Context.Guild.Id, (long)Context.Channel.Id, command).Result;
+            string reply = _dal.InsertConfigForCommandAsync((long)Context.Guild.Id, (long)Context.Channel.Id, command).Result;
             await ReplyAsync(reply);
         }
     }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Thirain.Data.TDBContext;
@@ -11,9 +12,10 @@ using Thirain.Data.TDBContext;
 namespace Thirain.Data.Migrations
 {
     [DbContext(typeof(ThirainDbContext))]
-    partial class ThirainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220302205101_Version1")]
+    partial class Version1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,18 +70,18 @@ namespace Thirain.Data.Migrations
                     b.Property<long>("ServerID")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("TemplateID")
-                        .HasColumnType("bigint");
-
                     b.Property<int>("TemplateType")
                         .HasColumnType("integer");
+
+                    b.Property<long?>("TemplatesID")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("Time")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("TemplateID");
+                    b.HasIndex("TemplatesID");
 
                     b.ToTable("Event");
                 });
@@ -167,12 +169,12 @@ namespace Thirain.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<long?>("TemplateID")
+                    b.Property<long?>("TemplatesID")
                         .HasColumnType("bigint");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("TemplateID");
+                    b.HasIndex("TemplatesID");
 
                     b.ToTable("EventRoles");
                 });
@@ -189,10 +191,6 @@ namespace Thirain.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<long>("RoleID")
                         .HasColumnType("bigint");
 
@@ -203,7 +201,7 @@ namespace Thirain.Data.Migrations
                     b.ToTable("SubRoles");
                 });
 
-            modelBuilder.Entity("Thirain.Data.Models.Template", b =>
+            modelBuilder.Entity("Thirain.Data.Models.Templates", b =>
                 {
                     b.Property<long>("ID")
                         .ValueGeneratedOnAdd()
@@ -215,15 +213,9 @@ namespace Thirain.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("Inline")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<long>("ServerID")
-                        .HasColumnType("bigint");
 
                     b.Property<int>("Type")
                         .HasColumnType("integer");
@@ -235,9 +227,9 @@ namespace Thirain.Data.Migrations
 
             modelBuilder.Entity("Thirain.Data.Models.Event", b =>
                 {
-                    b.HasOne("Thirain.Data.Models.Template", null)
+                    b.HasOne("Thirain.Data.Models.Templates", null)
                         .WithMany("Events")
-                        .HasForeignKey("TemplateID");
+                        .HasForeignKey("TemplatesID");
                 });
 
             modelBuilder.Entity("Thirain.Data.Models.EventManagerRoles", b =>
@@ -272,9 +264,9 @@ namespace Thirain.Data.Migrations
 
             modelBuilder.Entity("Thirain.Data.Models.EventRole", b =>
                 {
-                    b.HasOne("Thirain.Data.Models.Template", null)
+                    b.HasOne("Thirain.Data.Models.Templates", null)
                         .WithMany("EventRoles")
-                        .HasForeignKey("TemplateID");
+                        .HasForeignKey("TemplatesID");
                 });
 
             modelBuilder.Entity("Thirain.Data.Models.SubRole", b =>
@@ -303,7 +295,7 @@ namespace Thirain.Data.Migrations
                     b.Navigation("SubRoles");
                 });
 
-            modelBuilder.Entity("Thirain.Data.Models.Template", b =>
+            modelBuilder.Entity("Thirain.Data.Models.Templates", b =>
                 {
                     b.Navigation("EventRoles");
 

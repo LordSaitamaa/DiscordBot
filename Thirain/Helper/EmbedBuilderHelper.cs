@@ -24,7 +24,6 @@ namespace Thirain.Helper
             emotes.Add(new Emoji("\u0037\uFE0F\u20E3"));
             emotes.Add(new Emoji("\u0038\uFE0F\u20E3"));
             emotes.Add(new Emoji("\u0039\uFE0F\u20E3"));
-
             return emotes;
         }
 

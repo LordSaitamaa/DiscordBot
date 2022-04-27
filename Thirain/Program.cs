@@ -34,7 +34,7 @@ namespace Thirain
                 .ConfigureDiscordShardedHost((context, config) =>
                 {
                     config.SocketConfig = new DiscordSocketConfig
-                    {
+                    {                      
                         LogLevel = Discord.LogSeverity.Warning,
                         AlwaysDownloadUsers = false,
                         MessageCacheSize = 200,

@@ -1,14 +1,27 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Thirain.Data.Models;
 using Thirain.Data.TDBContext;
-using Thirain.Data.Dto;
 using System.Collections;
+using Thirain.Data.Repositories.Templates;
 
 namespace Thirain.Data.DataAccess
 {
     public class UnitOfWorkServer : IUnitOfWorkServer
     {
         private readonly IDbContextFactory<ThirainDbContext> _contextFactory;
+
+        private ITemplateRepository _templateRepository;
+        public ITemplateRepository TemplateRepository
+        {
+            get
+            {
+                if(_templateRepository == null )
+                    _templateRepository = new TemplateRepository(_contextFactory);
+
+                return _templateRepository;
+            }
+        }
+
 
         public UnitOfWorkServer(IDbContextFactory<ThirainDbContext> contextFactory)
         {
@@ -19,53 +32,18 @@ namespace Thirain.Data.DataAccess
         {
             List<Config> retList = new List<Config>();
             using (var context = _contextFactory.CreateDbContext())
-                retList = await context.Config.Where(x => x.Commands.Contains(cmdName)).ToListAsync<Config>();
+                retList = await context.Config?.Where(x => x.Commands.Contains(cmdName)).ToListAsync<Config>();
 
             return retList;
         }
 
-        public async Task<List<Template>> GetAllTemplates()
+        public async Task<Config> GetConfigsByNameAndServerAsync(string cmdName, long serverID)
         {
-            List<Template> templates = new List<Template>();
+            Config retConfig = new Config();
             using (var context = _contextFactory.CreateDbContext())
-                templates = await context.Templates.ToListAsync<Template>();
+                retConfig = await context.Config.SingleOrDefaultAsync(x => x.Commands.Contains(cmdName) && x.ServerID == serverID);
 
-            return templates;
-        }
-
-        public async Task<bool> SaveEventAsync(EventSaveDto eventDto, List<RoleDto> roleDto)
-        {
-            bool success = false;
-
-            using(var context = _contextFactory.CreateDbContext())
-            {
-                var eventNew = context.Event.Add(new Event()
-                {
-                    Template = eventDto.TemplateID,
-                    ServerID = eventDto.ServerID,
-                    Initiator = eventDto.Initiator,
-                    EventName = eventDto.EventName,
-                    Description = eventDto.Description,
-                    Time = TimeZoneInfo.ConvertTimeToUtc(eventDto.Time, TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time")),
-                }).Entity;
-
-                eventNew.Roles = new List<Role>();
-                foreach (var role in roleDto)
-                {
-                    var eventRole = new Role() { RoleName = role.RoleName };
-                    eventNew.Roles.Add(eventRole);
-                }
-                /* foreach(var role in roleDto)
-                 {
-                     var eventRole = context.Roles.Add(new Role()
-                     {
-                         EventID = eventNew.Id,
-                         RoleName = role.RoleName
-                     });
-                 }*/
-                context.SaveChanges();
-            }
-            return success;
+            return retConfig;
         }
 
         /// <summary>
@@ -76,7 +54,7 @@ namespace Thirain.Data.DataAccess
         /// <param name="cmdName"></param> Command which should be inserted
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<string> InsertConfigForCommand(long sid, long cid, string cmdName)
+        public async Task<string> InsertConfigForCommandAsync(long sid, long cid, string cmdName)
         {
             string retString = string.Empty;
             using (var context = _contextFactory.CreateDbContext())
@@ -96,9 +74,43 @@ namespace Thirain.Data.DataAccess
                     retString = $"For the following Command the config has been updated: {guild.Commands}";
 
                 }
-                context.SaveChanges();              
+                context.SaveChanges();
             }
             return retString;
+        }
+
+        public async Task<bool> SaveEventAsync(Event eventDto, List<EventRole> roleDto)
+        {
+            bool success = false;
+
+            return success;
+        }
+
+        public async Task<bool> CheckRolePermissionAsync(long eventid, string requestedRoleName, List<long> serverRoles)
+        {
+            bool permission = false;
+
+
+
+            return permission;
+        }
+
+        public async Task<bool> EnterEventAsync(long id, string role)
+        {
+            bool success = false;
+            using (var context = _contextFactory.CreateDbContext())
+            {
+
+            }
+            return success;
+        }
+
+        public async Task<List<Event>> GetAllEventsAsync(long serverID)
+        {
+            List<Event> retEvent = new();
+
+
+            return retEvent;
         }
     }
 }

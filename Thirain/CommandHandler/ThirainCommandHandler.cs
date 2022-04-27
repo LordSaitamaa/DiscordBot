@@ -68,17 +68,18 @@ namespace Thirain.CommandHandler
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            await _commandService.AddModulesAsync(Assembly.GetEntryAssembly(), _provider);
 
+            await _commandService.AddModulesAsync(Assembly.GetEntryAssembly(), _provider);
             await _client.WaitForReadyAsync(stoppingToken);
+            Console.WriteLine("Clients are Ready");
 
             _client.MessageReceived += OnMessageReceived;
             _commandService.CommandExecuted += OnCommandExecuted;
-
+            
             _serverId = GetServerId();
 
             _guildEmotes = InitGuildEmotes();
-
+            
             _merchantDTO = MerchantFactory.GetMerchants(_guildEmotes).Result;
 
             _allSpawnTimes = InitHelper.GetAllSpawntimes();
@@ -134,6 +135,8 @@ namespace Thirain.CommandHandler
                 return;
             }
 
+            // Berechnet immer die letzte angezeigte Spawntime und setzt die nächste
+            // Bsp. Jetzt ist 11:35 dann werden alle Merchants die um 11:30 spawnwn angezeigt und nächste spawntime auf 12:30 gesetzt
             for (int i = 0; i < _allSpawnTimes.Count; i++)
             {
                 if (i == _allSpawnTimes.Count - 1)
